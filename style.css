@@ -1,0 +1,644 @@
+/* ==========================================================================
+   1. DESIGN SYSTEM & RESETS (TALK INK TOOLS)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #020617;          /* Deep Navy/Slate Black */
+    --bg-card: #0f172a;          /* Lighter Dark Slate for sections */
+    --bg-input: #1e293b;         /* Input field backgrounds */
+    --text-main: #f8fafc;        /* Off-white crisp text */
+    --text-muted: #94a3b8;       /* Subtle grey text */
+    --accent: #38bdf8;           /* Neon Cyan for focus/accents */
+    --success: #10b981;          /* Emerald Green for downloads */
+    --border-color: #334155;     /* Clean subtle borders */
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   2. LAYOUT & CONTAINERS
+   ========================================================================== */
+.app-container {
+    width: 100%;
+    max-width: 600px; /* Clean single-column container */
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Header Branding */
+.app-header {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.brand-name {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    color: var(--text-main);
+}
+
+.brand-name .accent-text {
+    color: var(--accent);
+}
+
+.tagline {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* Tool Wrapper Box */
+.tool-wrapper {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.tool-header h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tool-header i {
+    color: var(--accent);
+}
+
+/* ==========================================================================
+   3. STEP 1: UPLOAD AREA
+   ========================================================================== */
+.drop-zone {
+    border: 2px dashed var(--border-color);
+    background-color: rgba(30, 41, 59, 0.3);
+    border-radius: var(--radius-md);
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--accent);
+    background-color: rgba(56, 189, 248, 0.05);
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+    color: var(--accent);
+    transition: var(--transition);
+}
+
+.drop-zone:hover .upload-icon {
+    transform: translateY(-4px);
+}
+
+.drop-zone p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.drop-zone p span {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   4. STEP 2: PDF PREVIEW CARD & COUNTER
+   ========================================================================== */
+.pdf-preview-card {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pdf-preview-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(56, 189, 248, 0.2);
+}
+
+.pdf-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 70%;
+}
+
+.pdf-icon {
+    font-size: 1.8rem;
+    color: #ef4444; /* Standard PDF Red */
+}
+
+.file-details {
+    overflow: hidden;
+}
+
+.file-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.file-size {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.preview-counter-badge {
+    background-color: rgba(56, 189, 248, 0.15);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   5. STEP 3: INPUT & PROCESSING
+   ========================================================================== */
+.input-group-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.input-field-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-field-wrapper label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.input-field-wrapper input {
+    width: 100%;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: var(--transition);
+}
+
+.input-field-wrapper input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* Buttons */
+.btn-primary, .btn-success {
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: #000; /* Dark text for high contrast on light blue */
+    padding: 15px 24px;
+}
+
+.btn-primary:hover {
+    background-color: #7dd3fc;
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   6. STEP 4: COMPRESSION & FINAL DOWNLOAD
+   ========================================================================== */
+.result-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-color), transparent);
+    margin: 12px 0 24px 0;
+}
+
+.download-compress-section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.compressor-box {
+    background-color: rgba(30, 41, 59, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.compressor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.compressor-header label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.quality-value {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+/* Custom Range Slider */
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-color);
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.size-estimation {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.size-estimation span {
+    color: var(--success);
+    font-weight: 600;
+}
+
+/* Success Download Button */
+.btn-success {
+    background-color: var(--success);
+    color: #fff;
+    width: 100%;
+    padding: 16px;
+    font-size: 1rem;
+    box-shadow: 0 10px 20px -10px rgba(16, 185, 129, 0.3);
+}
+
+.btn-success:hover {
+    background-color: #34d399;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px -10px rgba(16, 185, 129, 0.4);
+}
+
+/* Footer styling */
+.app-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+/* ==========================================================================
+   7. MOBILE RESPONSIVE ADAPTATIONS (Media Queries)
+   ========================================================================== */
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+
+    .tool-wrapper {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .brand-name {
+        font-size: 1.8rem;
+    }
+
+    .input-group-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .pdf-preview-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .pdf-info {
+        max-width: 100%;
+    }
+
+    .preview-counter-badge {
+        align-self: flex-end;
+    }
+}
+
+
+
+/* ==========================================================================
+   8. PDF LIVE VIEWER MODAL STYLES
+   ========================================================================== */
+.pdf-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(2, 6, 23, 0.95); /* Deep dark overlay */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 550px;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.modal-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-counter {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--accent);
+    background-color: rgba(56, 189, 248, 0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+.close-modal-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close-modal-btn:hover {
+    color: #ef4444;
+}
+
+/* Scrollable area for high quality page render */
+.modal-body {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0b1329;
+    padding: 16px;
+}
+
+#modalPdfCanvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.modal-footer {
+    padding: 16px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.btn-nav {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-nav:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.btn-select-page {
+    background-color: var(--accent);
+    color: #000;
+    border: none;
+    flex: 1;
+    justify-content: center;
+}
+
+.btn-select-page:hover {
+    background-color: #7dd3fc;
+    color: #000;
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        height: 90vh;
+    }
+    .btn-nav {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+
+/* ==========================================================================
+   9. MODAL SEEKER SLIDER STYLES
+   ========================================================================== */
+.modal-slider-wrapper {
+    padding: 10px 20px;
+    background-color: rgba(15, 23, 42, 0.6);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-seeker {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 10px;
+    background: var(--border-color);
+    outline: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-seeker::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    transition: transform 0.1s ease;
+}
+
+.modal-seeker::-webkit-slider-thumb:active {
+    transform: scale(1.3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   10. NAVIGATION TABS STYLES
+   ========================================================================== */
+.tool-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    background-color: var(--bg-card);
+    padding: 6px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.tab-btn:hover {
+    color: var(--text-main);
+}
+
+.tab-btn.active {
+    background-color: var(--bg-input);
+    color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+}

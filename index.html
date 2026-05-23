@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALK INK TOOLS - Ultimate E-Book Converter</title>
+    <!-- FontAwesome for clean, professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- PDF.js Core Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- html2pdf & epubjs for Client-Side EPUB Conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/epubjs/0.3.88/epub.min.js"></script>
+    
+    
+    <!-- Inside <head> -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#020617">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+</head>
+
+<body>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        
+        <!-- Header Section -->
+        <header class="app-header">
+            <h1 class="brand-name">TALK INK <span class="accent-text">TOOLS</span></h1>
+            <p class="tagline">Convert & Compress with Precision</p>
+            
+            <!-- NEW: Premium Tool Navigation Tabs -->
+            <div class="tool-tabs">
+                <button class="tab-btn active" onclick="switchTool('pdfToImgTool')">
+                    <i class="fa-solid fa-file-image"></i> PDF to Image
+                </button>
+                <button class="tab-btn" onclick="switchTool('epubToPdfTool')">
+                    <i class="fa-solid fa-book"></i> EPUB to PDF
+                </button>
+            </div>
+        </header>
+
+        <!-- ==========================================
+             TOOL 1: PDF TO IMAGE CONVERTER
+             ========================================== -->
+        <main class="tool-wrapper" id="pdfToImgTool">
+            <div class="tool-header">
+                <h2><i class="fa-solid fa-file-pdf"></i> PDF to Image Converter</h2>
+            </div>
+
+            <!-- STEP 1: PDF Upload Section -->
+            <section class="upload-section">
+                <div class="drop-zone" id="dropZone">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <p>Drag & drop your PDF here or <span>Browse</span></p>
+                    <input type="file" id="pdfInput" accept=".pdf" hidden>
+                </div>
+            </section>
+
+            <!-- STEP 2: PDF Preview & Counter Div -->
+            <section class="preview-section" id="previewSection" style="display: none;">
+                <div class="pdf-preview-card" id="pdfPreviewCard">
+                    <div class="pdf-info">
+                        <i class="fa-solid fa-file-lines pdf-icon"></i>
+                        <div class="file-details">
+                            <p class="file-name" id="fileName">document.pdf</p>
+                            <p class="file-size" id="fileSize">2.4 MB</p>
+                        </div>
+                    </div>
+                    <div class="preview-counter-badge">
+                        <i class="fa-solid fa-book-open"></i> <span id="currentViewPage">1</span>/<span id="totalViewPages">--</span> Pages
+                    </div>
+                </div>
+            </section>
+
+            <!-- STEP 3: Page Selection & Processing Section -->
+            <section class="action-section" id="actionSection" style="display: none;">
+                <div class="input-group-row">
+                    <div class="input-field-wrapper">
+                        <label for="pageNumberInput">Enter Page Number</label>
+                        <input type="number" id="pageNumberInput" min="1" placeholder="e.g. 5">
+                    </div>
+                    <button type="button" class="btn-primary" id="processBtn">
+                        <i class="fa-solid fa-gear"></i> Process Page
+                    </button>
+                </div>
+            </section>
+
+            <!-- STEP 4: Image Compression & Final Download Section -->
+            <section class="download-compress-section" id="downloadCompressSection" style="display: none;">
+                <div class="result-divider"></div>
+                <h3><i class="fa-solid fa-image"></i> Processed Image Result</h3>
+                <div class="compressor-box">
+                    <div class="compressor-header">
+                        <label for="qualitySlider"><i class="fa-solid fa-sliders"></i> Image Compression Quality</label>
+                        <span class="quality-value" id="qualityValue">80%</span>
+                    </div>
+                    <input type="range" id="qualitySlider" min="10" max="100" value="80" class="slider">
+                    <div class="size-estimation">
+                        <p>Estimated Size: <span id="estimatedSize">High Quality</span></p>
+                    </div>
+                </div>
+                <button type="button" class="btn-success" id="downloadBtn">
+                    <i class="fa-solid fa-download"></i> Download High Quality Image
+                </button>
+            </section>
+        </main>
+
+        <!-- ==========================================
+             NEW FEATURE: TOOL 2: EPUB TO PDF CONVERTER
+             ========================================== -->
+        <main class="tool-wrapper" id="epubToPdfTool" style="display: none;">
+            <div class="tool-header">
+                <h2><i class="fa-solid fa-book-open"></i> EPUB to PDF Converter</h2>
+            </div>
+
+            <!-- STEP 1: EPUB Upload Section -->
+            <section class="upload-section">
+                <div class="drop-zone" id="epubDropZone">
+                    <i class="fa-solid fa-file-import upload-icon" style="color: #a855f7;"></i>
+                    <p>Drag & drop your EPUB file here or <span>Browse</span></p>
+                    <input type="file" id="epubInput" accept=".epub" hidden>
+                </div>
+            </section>
+
+            <!-- STEP 2: EPUB Preview Panel -->
+            <section class="preview-section" id="epubPreviewSection" style="display: none;">
+                <div class="pdf-preview-card" style="cursor: default;">
+                    <div class="pdf-info">
+                        <i class="fa-solid fa-book" style="color: #a855f7;"></i>
+                        <div class="file-details">
+                            <p class="file-name" id="epubFileName">book.epub</p>
+                            <p class="file-size" id="epubFileSize">1.2 MB</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hidden Sandbox Area for Rendering EPUB Pages into HTML Buffer -->
+                <div id="epubRenderBuffer" style="display: none;"></div>
+
+                <!-- Convert Action Button -->
+                <button type="button" class="btn-primary" id="convertEpubBtn" style="background-color: #a855f7; color: white; width: 100%; margin-top: 20px; padding: 16px;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Convert & Download PDF
+                </button>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 TALK INK TOOLS. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <!-- PDF Live Viewer Modal (Remains Same) -->
+    <div class="pdf-modal" id="pdfModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-counter">
+                    <i class="fa-solid fa-book-open"></i> Page <span id="modalCurrentPage">1</span> of <span id="modalTotalPages">--</span>
+                </div>
+                <button class="close-modal-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-slider-wrapper">
+                <input type="range" id="modalPageSlider" min="1" max="100" value="1" class="modal-seeker">
+            </div>
+            <div class="modal-body">
+                <canvas id="modalPdfCanvas"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-nav" id="prevPageBtn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+                <button type="button" class="btn-nav btn-select-page" id="selectPageBtn"><i class="fa-solid fa-check"></i> Select This Page</button>
+                <button type="button" class="btn-nav" id="nextPageBtn">Next <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+    
+    
+    <!-- Service Worker Registration Script -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('Service Worker Registered Successfully!', reg.scope))
+        .catch((err) => console.log('Service Worker Registration Failed:', err));
+    });
+  }
+</script>
+
+</body>
+</html>
